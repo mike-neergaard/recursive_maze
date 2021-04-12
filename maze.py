@@ -1,5 +1,4 @@
 import random
-from datetime import datetime
 import sys
 import os
 import time
@@ -10,6 +9,18 @@ backmap = {"N":"S", "S":"N", "E":"W", "W":"E"}
 ANIMATE = False
 DEBUG = False
 
+def clear():
+    """ cler
+
+    clear the screen
+    """
+    # for windows
+    if os.name == 'nt':
+        _ = os.system('cls')
+  
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = os.system('clear')
 
 def key_string(a):
     """ key_string
@@ -137,8 +148,7 @@ def print_maze(maze, width, height):
         -
     """
     # Clear the screen
-    # Only tested on WSL
-    print('\033c')
+    clear()
 
     #Print the very top of the maze, which always has a boundary
     for col in range(width):
@@ -173,7 +183,7 @@ def print_maze(maze, width, height):
     # If we are animating, everything needs to finish printing right now
     sys.stdout.flush()
 
-    if ANIMATE: time.sleep(0.1)
+    if ANIMATE: time.sleep(0.2)
 
 def main(width, height, animation, random_seed):
 
@@ -183,12 +193,9 @@ def main(width, height, animation, random_seed):
 
     # Make the maze
     maze = make_maze(width, height)
-    return
 
     # Print the maze
     print_maze(maze, width, height)
-    print(args)
-
 
 
 if __name__ == "__main__":
@@ -197,7 +204,7 @@ if __name__ == "__main__":
     width = 30
     height = 30
     animate = False
-    random_seed = datetime.now()
+    random_seed = time.time()
 
     # Command-line options
     parser = argparse.ArgumentParser()
